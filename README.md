@@ -1,1 +1,1 @@
-# apartmentlocator
+# apartment-locator
