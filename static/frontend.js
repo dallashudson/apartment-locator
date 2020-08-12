@@ -31,6 +31,15 @@ class App extends Preact.Component {
       todos: todos.concat(`Item ${todos.length}`)
     })
   }
+  async getApartments() {
+    const response = await fetch('/apartments')
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch')
+    }
+    const responseBody = await response.json()
+    const apartments = responseBody
+    console.log(apartments)
+  }
   render() {
     const { page } = this.props
     const { todos } = this.state
@@ -41,6 +50,7 @@ class App extends Preact.Component {
           ${todos.map(todo => html`<li key="${todo}">${todo}</li>`)}
         </ul>
         <button onClick=${() => this.addTodo()}>Add Todo</button>
+        <button onClick=${() => this.getApartments()}>Get Apartments</button>
         <${Footer}>footer content here</Footer>
       </div>
     `
