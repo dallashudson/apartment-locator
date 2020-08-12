@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "json-server --static static/ db.json"
+    "start": "json-server --static static/ --port 3000 --host 127.0.0.1 db.json"
   },
   "repository": {
     "type": "git",

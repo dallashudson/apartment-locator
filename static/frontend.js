@@ -3,7 +3,18 @@ import * as Preact from 'https://unpkg.com/preact@10.4.7/dist/preact.module.js'
 import htm from 'https://unpkg.com/htm@3.0.4/dist/htm.module.js'
 // 2. make htm import work with Preact import
 const html = htm.bind(Preact.createElement)
-// 3. define LoadingIndicator component
+// 3. define function to make HTTP GET requests that return JSON bodies
+const apiRequest = async (url) => {
+  const response = await window.fetch(url, {
+    method: 'GET'
+  })
+  if (response.status !== 200) {
+    throw new Error('Failed to fetch')
+  }
+  return response.json()
+}
+
+// 4. define LoadingIndicator component
 class LoadingIndicator extends Preact.Component {
   constructor() {
     super()
@@ -13,7 +24,7 @@ class LoadingIndicator extends Preact.Component {
     return html`<p>Loading: ${loading.toString()}</p>`
   }
 }
-// 4. define App component
+// 5. define App component
 class App extends Preact.Component {
   constructor() {
     super()
@@ -22,13 +33,6 @@ class App extends Preact.Component {
       apartments: []
     }
   }
-  async apiRequest(url) {
-    const response = await window.fetch(url)
-    if (response.status !== 200) {
-      throw new Error('Failed to fetch')
-    }
-    return response.json()
-  }
   async componentDidMount() {
     try {
       // set loading true
@@ -36,7 +40,7 @@ class App extends Preact.Component {
         loading: true
       })
       // fetch apartments
-      const apartments = await this.apiRequest('/apartments')
+      const apartments = await apiRequest('/apartments')
       // set state
       this.setState({
         apartments
@@ -55,12 +59,12 @@ class App extends Preact.Component {
     const { loading, apartments } = this.state
     return html`
       <h1>Apartments</h1>
-      <${LoadingIndicator} loading="${loading}"/>
+      <${LoadingIndicator} loading=${loading} />
       <ul>
         ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.name}</li>`)}
       </ul>
     `
   }
 }
-// 4. append rendered App component to node document.body
+// 6. append rendered App component to node document.body
 Preact.render(html`<${App}/>`, document.body)
