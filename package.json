@@ -1,0 +1,23 @@
+{
+  "name": "apartment-locator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "json-server --static static/ db.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dallashudson/apartment-locator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dallashudson/apartment-locator/issues"
+  },
+  "homepage": "https://github.com/dallashudson/apartment-locator#readme",
+  "dependencies": {
+    "json-server": "^0.16.1"
+  }
+}
