@@ -3,6 +3,16 @@
     {
       "id": 1,
       "name": "Ugly",
+      "layouts": [
+        {
+          "name": "2x2",
+          "price": 1000
+        },
+        {
+          "name": "3x3",
+          "price": 2000
+        }
+      ],
       "address": {
         "street1": "123 Fake Lane",
         "street2": "Apt 102",

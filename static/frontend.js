@@ -14,14 +14,19 @@ const apiRequest = async (url) => {
   return response.json()
 }
 
-// 4. define LoadingIndicator component
-class LoadingIndicator extends Preact.Component {
+// 4. define ApartmentsList component
+class ApartmentsList extends Preact.Component {
   constructor() {
     super()
   }
   render() {
-    const { loading } = this.props
-    return html`<p>Loading: ${loading.toString()}</p>`
+    const { loading, apartments } = this.props
+    if (loading) {
+      return html`Loading...`
+    }
+    return html`<ul>
+      ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.name}</li>`)}
+    </ul>`
   }
 }
 // 5. define App component
@@ -59,10 +64,7 @@ class App extends Preact.Component {
     const { loading, apartments } = this.state
     return html`
       <h1>Apartments</h1>
-      <${LoadingIndicator} loading=${loading} />
-      <ul>
-        ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.name}</li>`)}
-      </ul>
+      <${ApartmentsList} loading=${loading} apartments=${apartments} />
     `
   }
 }
