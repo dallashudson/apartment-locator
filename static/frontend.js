@@ -8,6 +8,7 @@ class App extends Preact.Component {
   constructor() {
     super()
     this.state = {
+      loading: false,
       apartments: []
     }
   }
@@ -21,15 +22,33 @@ class App extends Preact.Component {
     return apartments
   }
   async componentDidMount() {
-    this.setState({
-      apartments: await this.getApartments()
-    })
+    try {
+      // set loading true
+      this.setState({
+        loading: true
+      })
+      // fetch apartments
+      const apartments = await this.getApartments()
+      // set state
+      this.setState({
+        apartments
+      })
+    } catch (err) {
+      // alert on error
+      alert(err)
+    } finally {
+      // set loading false
+      this.setState({
+        loading: false
+      })
+    }
   }
   render() {
-    const { apartments } = this.state
+    const { loading, apartments } = this.state
     return html`
       <div class="app">
         <h1>Apartments</h1>
+        <p>loading: ${this.state.loading.toString()}</p>
         <ul>
           ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.name}</li>`)}
         </ul>
@@ -37,5 +56,5 @@ class App extends Preact.Component {
     `
   }
 }
-// 6. append rendered App component to node document.body
+// 4. append rendered App component to node document.body
 Preact.render(html`<${App}></App>`, document.body)
