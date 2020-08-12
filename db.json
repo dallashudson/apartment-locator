@@ -3,8 +3,70 @@
     {
       "id": 1,
       "name": "Ugly",
+      "layouts": [
+        {
+          "name": "2x1",
+          "price": 1000
+        },
+        {
+          "name": "2x2",
+          "price": 1000
+        },
+        {
+          "name": "3x3",
+          "price": 2000
+        }
+      ],
       "address": {
         "street1": "123 Fake Lane",
+        "street2": "Apt 102",
+        "city": "Austin",
+        "state": "Texas",
+        "zip": "12345"
+      }
+    },
+
+    {
+      "id": 2,
+      "name": "Sexy",
+      "layouts": [
+        {
+          "name": "2x1",
+          "price": 1500
+        },
+        {
+          "name": "2x2",
+          "price": 2000
+        },
+        {
+          "name": "3x3",
+          "price": 3000
+        }
+      ],
+      "address": {
+        "street1": "123 Baller Lane",
+        "street2": "Apt 102",
+        "city": "Austin",
+        "state": "Texas",
+        "zip": "12345"
+      }
+    },
+
+    {
+      "id": 3,
+      "name": "Ghetto",
+      "layouts": [
+        {
+          "name": "2x2",
+          "price": 1000
+        },
+        {
+          "name": "3x3",
+          "price": 2500
+        }
+      ],
+      "address": {
+        "street1": "123 Poverty Lane",
         "street2": "Apt 102",
         "city": "Austin",
         "state": "Texas",
