@@ -62,14 +62,14 @@ class App extends Preact.Component {
         },
         {
           type: 'checkbox',
-          name: 'layouts.name_contains',
+          name: 'layouts.name',
           value: '3x3',
           label: '3x3',
           checked: false
         },
         {
           type: 'checkbox',
-          name: 'layouts.name_contains',
+          name: 'layouts.name',
           value: '4x4',
           label: '4x4',
           checked: false
