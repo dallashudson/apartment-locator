@@ -20,6 +20,23 @@
         "state": "Texas",
         "zip": "12345"
       }
+    },
+    {
+      "id": 2,
+      "name": "Pretty",
+      "layouts": [
+        {
+          "name": "4x4",
+          "price": 3000
+        }
+      ],
+      "address": {
+        "street1": "456 Fake Ave",
+        "street2": "Apt 984",
+        "city": "Houstin",
+        "state": "Texas",
+        "zip": "67890"
+      }
     }
   ]
 }
