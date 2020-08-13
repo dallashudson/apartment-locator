@@ -3,16 +3,8 @@
     {
       "id": 1,
       "name": "Ugly",
-      "layouts": [
-        {
-          "name": "2x2",
-          "price": 1000
-        },
-        {
-          "name": "3x3",
-          "price": 2000
-        }
-      ],
+      "layout": "2x2",
+      "price": 1000,
       "address": {
         "street1": "123 Fake Lane",
         "street2": "Apt 102",
@@ -23,13 +15,22 @@
     },
     {
       "id": 2,
+      "name": "Ugly",
+      "layout": "3x3",
+      "price": 2000,
+      "address": {
+        "street1": "123 Fake Lane",
+        "street2": "Apt 102",
+        "city": "Austin",
+        "state": "Texas",
+        "zip": "12345"
+      }
+    },
+    {
+      "id": 3,
       "name": "Pretty",
-      "layouts": [
-        {
-          "name": "4x4",
-          "price": 3000
-        }
-      ],
+      "layout": "4x4",
+      "price": 3000,
       "address": {
         "street1": "456 Fake Ave",
         "street2": "Apt 984",

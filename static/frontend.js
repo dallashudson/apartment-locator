@@ -24,7 +24,7 @@ class ApartmentsList extends Preact.Component {
       return html`Loading...`
     }
     return html`<ul>
-      ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.name}</li>`)}
+      ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.layout} @ ${apartment.name} (\$${apartment.price})</li>`)}
     </ul>`
   }
 }
@@ -65,33 +65,33 @@ class App extends Preact.Component {
         },
         {
           type: 'number',
-          name: 'layouts.minPrice',
+          name: 'minPrice',
           label: 'Price (min)',
           value: ''
         },
         {
           type: 'number',
-          name: 'layouts.maxPrice',
+          name: 'maxPrice',
           label: 'Price (max)',
           value: ''
         },
         {
           type: 'checkbox',
-          name: 'layouts.name',
+          name: 'layout',
           value: '2x2',
           label: '2x2',
           checked: false
         },
         {
           type: 'checkbox',
-          name: 'layouts.name',
+          name: 'layout',
           value: '3x3',
           label: '3x3',
           checked: false
         },
         {
           type: 'checkbox',
-          name: 'layouts.name',
+          name: 'layout',
           value: '4x4',
           label: '4x4',
           checked: false

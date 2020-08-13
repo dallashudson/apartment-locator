@@ -3,24 +3,24 @@ const fs = require('fs')
 
 const apartmentPassesFilters = (apartment, filters) => {
   return filters.every(filter => {
-    if (filter.name === 'layouts.name') {
+    if (filter.name === 'layout') {
       // no filter value yet, always include
       if (!filter.checked) {
         return true
       }
-      return apartment.layouts.some(layout => layout.name === filter.value)
-    } else if (filter.name === 'layouts.minPrice') {
+      return apartment.layout === filter.value
+    } else if (filter.name === 'minPrice') {
       // no filter value yet, always include
       if (!filter.value) {
         return true
       }
-      return apartment.layouts.every(layout => layout.price >= filter.value)
-    } else if (filter.name === 'layouts.maxPrice') {
+      return apartment.price >= filter.value
+    } else if (filter.name === 'maxPrice') {
       // no filter value yet, always include
       if (!filter.value) {
         return true
       }
-      return apartment.layouts.every(layout => layout.price <= filter.value)
+      return apartment.price <= filter.value
     } else if (filter.name === 'address.zip') {
       // no filter value yet, always include
       if (!filter.value) {
