@@ -84,7 +84,7 @@ class App extends Preact.Component {
         loading: true
       })
       // fetch apartments
-      const url = new window.URL('http://127.0.0.1:3000/apartments')
+      const url = new window.URL(`${window.location.protocol}//${window.location.host}/apartments`)
       url.searchParams.append('filters', JSON.stringify(filters))
       const apartments = await apiRequest(url)
       // set state
