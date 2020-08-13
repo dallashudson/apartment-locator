@@ -55,16 +55,23 @@ class App extends Preact.Component {
       filters: [
         {
           type: 'checkbox',
-          name: 'layout',
+          name: 'layouts.name',
           value: '2x2',
           label: '2x2',
           checked: false
         },
         {
           type: 'checkbox',
-          name: 'layout',
+          name: 'layouts.name_contains',
           value: '3x3',
           label: '3x3',
+          checked: false
+        },
+        {
+          type: 'checkbox',
+          name: 'layouts.name_contains',
+          value: '4x4',
+          label: '4x4',
           checked: false
         }
       ]
@@ -78,13 +85,7 @@ class App extends Preact.Component {
       })
       // fetch apartments
       const url = new window.URL('http://127.0.0.1:3000/apartments')
-      for (let i = 0; i < filters.length; ++i) {
-        const filter = filters[i]
-        if (filter.type === 'checkbox' && filter.checked) {
-          url.searchParams.append(filter.name, filter.value)
-        }
-      }
-      console.log(filters)
+      url.searchParams.append('filters', JSON.stringify(filters))
       const apartments = await apiRequest(url)
       // set state
       this.setState({
