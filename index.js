@@ -4,16 +4,19 @@ const fs = require('fs')
 const apartmentPassesFilters = (apartment, filters) => {
   return filters.every(filter => {
     if (filter.name === 'layouts.name') {
+      // no filter value yet, always include
       if (!filter.checked) {
         return true
       }
       return apartment.layouts.some(layout => layout.name === filter.value)
     } else if (filter.name === 'layouts.minPrice') {
+      // no filter value yet, always include
       if (!filter.value) {
         return true
       }
       return apartment.layouts.every(layout => layout.price >= filter.value)
     } else if (filter.name === 'layouts.maxPrice') {
+      // no filter value yet, always include
       if (!filter.value) {
         return true
       }
