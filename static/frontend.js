@@ -23,9 +23,26 @@ class ApartmentsList extends Preact.Component {
     if (loading) {
       return html`Loading...`
     }
-    return html`<ul>
-      ${apartments.map(apartment => html`<li key="${apartment.id}">${apartment.layout} @ ${apartment.name} (\$${apartment.price})</li>`)}
-    </ul>`
+    return html`
+      <table border="">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Layout</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${apartments.map(apartment => html`
+            <tr key="${apartment.id}">
+              <td>${apartment.layout}</td>
+              <td>${apartment.name}</td>
+              <td>\$${apartment.price}</td>
+            </tr>
+          `)}
+        </tbody>
+      </table>
+    `
   }
 }
 
