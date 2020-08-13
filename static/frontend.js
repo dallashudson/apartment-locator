@@ -76,7 +76,7 @@ class App extends Preact.Component {
       filters: [
         {
           type: 'text',
-          name: 'address.zip',
+          name: 'zip',
           label: 'Zip code',
           value: ''
         },
@@ -97,21 +97,21 @@ class App extends Preact.Component {
           name: 'layout',
           value: '2x2',
           label: '2x2',
-          checked: false
+          checked: true
         },
         {
           type: 'checkbox',
           name: 'layout',
           value: '3x3',
           label: '3x3',
-          checked: false
+          checked: true
         },
         {
           type: 'checkbox',
           name: 'layout',
           value: '4x4',
           label: '4x4',
-          checked: false
+          checked: true
         }
       ]
     }

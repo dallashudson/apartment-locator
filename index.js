@@ -2,35 +2,38 @@ const express = require('express')
 const fs = require('fs')
 
 const apartmentPassesFilters = (apartment, filters) => {
-  return filters.every(filter => {
-    if (filter.name === 'layout') {
-      // no filter value yet, always include
-      if (!filter.checked) {
-        return true
-      }
-      return apartment.layout === filter.value
-    } else if (filter.name === 'minPrice') {
-      // no filter value yet, always include
-      if (!filter.value) {
-        return true
-      }
-      return apartment.price >= filter.value
-    } else if (filter.name === 'maxPrice') {
-      // no filter value yet, always include
-      if (!filter.value) {
-        return true
-      }
-      return apartment.price <= filter.value
-    } else if (filter.name === 'address.zip') {
-      // no filter value yet, always include
-      if (!filter.value) {
-        return true
-      }
-      return apartment.address.zip === filter.value
-    } else {
-      throw new Error(`Unknown filter name: ${filter.name}`)
+  const minPriceFilter = filters.find(filter => filter.name === 'minPrice')
+  const maxPriceFilter = filters.find(filter => filter.name === 'maxPrice')
+  const zipCodeFilter = filters.find(filter => filter.name === 'zip')
+  const layoutFilters = filters.filter(filter => filter.name === 'layout')
+  if (minPriceFilter.value) {
+    const passes = apartment.price >= minPriceFilter.value
+    if (!passes) {
+      return false
     }
-  })
+  }
+  if (maxPriceFilter.value) {
+    const passes = apartment.price <= maxPriceFilter.value
+    if (!passes) {
+      return false
+    }
+  }
+  if (zipCodeFilter.value) {
+    const passes = apartment.address.zip === zipCodeFilter.value
+    if (!passes) {
+      return false
+    }
+  }
+  for (let i = 0; i < layoutFilters.length; ++i) {
+    const layoutFilter = layoutFilters[i]
+    if (!layoutFilter.checked) {
+      const passes = apartment.layout !== layoutFilter.value
+      if (!passes) {
+        return false
+      }
+    }
+  }
+  return true
 }
 
 const run = () => {
