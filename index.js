@@ -21,6 +21,12 @@ const apartmentPassesFilters = (apartment, filters) => {
         return true
       }
       return apartment.layouts.every(layout => layout.price <= filter.value)
+    } else if (filter.name === 'address.zip') {
+      // no filter value yet, always include
+      if (!filter.value) {
+        return true
+      }
+      return apartment.address.zip === filter.value
     } else {
       throw new Error(`Unknown filter name: ${filter.name}`)
     }

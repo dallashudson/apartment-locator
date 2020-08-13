@@ -39,9 +39,9 @@ class Filters extends Preact.Component {
     for (let i = 0; i < filters.length; ++i) {
       const filter = filters[i]
       if (filter.type === 'checkbox') {
-        template.push(html`<input type="checkbox" name="${filter.name}" value="${filter.value}" onChange=${(event) => onFilterChange(event, i)} checked=${filter.checked} /> ${filter.label}<br/>`)
-      } else if (filter.type === 'number') {
-        template.push(html`<input type="number" name="${filter.name}" value="${filter.value}" onChange=${(event) => onFilterChange(event, i)} /> ${filter.label}<br/>`)
+        template.push(html`<input type="${filter.type}" name="${filter.name}" value="${filter.value}" onChange=${(event) => onFilterChange(event, i)} checked=${filter.checked} /> ${filter.label}<br/>`)
+      } else if (filter.type === 'number' || filter.type === 'text') {
+        template.push(html`<input type="${filter.type}" name="${filter.name}" value="${filter.value}" onKeyUp=${(event) => onFilterChange(event, i)} /> ${filter.label}<br/>`)
       } else {
         throw new Error(`Unknown filter type: ${filer.type}`)
       }
@@ -57,6 +57,12 @@ class App extends Preact.Component {
       loading: false,
       apartments: [],
       filters: [
+        {
+          type: 'text',
+          name: 'address.zip',
+          label: 'Zip code',
+          value: ''
+        },
         {
           type: 'number',
           name: 'layouts.minPrice',
@@ -127,6 +133,8 @@ class App extends Preact.Component {
       newFilters[filterIndex].checked = event.target.checked
     } else if (filter.type === 'number') {
       newFilters[filterIndex].value = parseInt(event.target.value, 10)
+    } else if (filter.type === 'text') {
+      newFilters[filterIndex].value = event.target.value
     } else {
       throw new Error(`Unknown filer type: ${filter.type}`)
     }
