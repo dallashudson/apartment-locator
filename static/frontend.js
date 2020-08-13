@@ -40,6 +40,10 @@ class Filters extends Preact.Component {
       const filter = filters[i]
       if (filter.type === 'checkbox') {
         template.push(html`<input type="checkbox" name="${filter.name}" value="${filter.value}" onChange=${(event) => onFilterChange(event, i)} checked=${filter.checked} /> ${filter.label}<br/>`)
+      } else if (filter.type === 'number') {
+        template.push(html`<input type="number" name="${filter.name}" value="${filter.value}" onChange=${(event) => onFilterChange(event, i)} /> ${filter.label}<br/>`)
+      } else {
+        throw new Error(`Unknown filter type: ${filer.type}`)
       }
     }
     return template
@@ -53,6 +57,18 @@ class App extends Preact.Component {
       loading: false,
       apartments: [],
       filters: [
+        {
+          type: 'number',
+          name: 'layouts.minPrice',
+          label: 'Price (min)',
+          value: ''
+        },
+        {
+          type: 'number',
+          name: 'layouts.maxPrice',
+          label: 'Price (max)',
+          value: ''
+        },
         {
           type: 'checkbox',
           name: 'layouts.name',
@@ -109,6 +125,10 @@ class App extends Preact.Component {
     const filter = newFilters[filterIndex]
     if (filter.type === 'checkbox'){
       newFilters[filterIndex].checked = event.target.checked
+    } else if (filter.type === 'number') {
+      newFilters[filterIndex].value = parseInt(event.target.value, 10)
+    } else {
+      throw new Error(`Unknown filer type: ${filter.type}`)
     }
     this.setState({
       filters: newFilters

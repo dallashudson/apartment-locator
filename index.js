@@ -3,15 +3,23 @@ const fs = require('fs')
 
 const apartmentPassesFilters = (apartment, filters) => {
   return filters.every(filter => {
-    if (filter.type === 'checkbox') {
+    if (filter.name === 'layouts.name') {
       if (!filter.checked) {
         return true
       }
-      if (filter.name === 'layouts.name') {
-        return apartment.layouts.some(layout => layout.name === filter.value)
+      return apartment.layouts.some(layout => layout.name === filter.value)
+    } else if (filter.name === 'layouts.minPrice') {
+      if (!filter.value) {
+        return true
       }
+      return apartment.layouts.every(layout => layout.price >= filter.value)
+    } else if (filter.name === 'layouts.maxPrice') {
+      if (!filter.value) {
+        return true
+      }
+      return apartment.layouts.every(layout => layout.price <= filter.value)
     } else {
-      throw new Error(`Unknown filter type: ${filter.type}`)
+      throw new Error(`Unknown filter name: ${filter.name}`)
     }
   })
 }
