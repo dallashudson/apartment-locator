@@ -1,9 +1,8 @@
-// 1. imports from unpkg.com
 import * as Preact from 'https://unpkg.com/preact@10.4.7/dist/preact.module.js'
 import htm from 'https://unpkg.com/htm@3.0.4/dist/htm.module.js'
-// 2. make htm import work with Preact import
+
 const html = htm.bind(Preact.createElement)
-// 3. define function to make HTTP GET requests that return JSON bodies
+
 const apiRequest = async (url) => {
   const response = await window.fetch(url, {
     method: 'GET'
@@ -14,7 +13,7 @@ const apiRequest = async (url) => {
   return response.json()
 }
 
-// 4. define ApartmentsList component
+
 class ApartmentsList extends Preact.Component {
   constructor() {
     super()
@@ -29,23 +28,64 @@ class ApartmentsList extends Preact.Component {
     </ul>`
   }
 }
-// 5. define App component
+
+class Filters extends Preact.Component {
+  constructor() {
+    super()
+  }
+  render() {
+    const { onFilterChange, filters } = this.props
+    const template = []
+    for (let i = 0; i < filters.length; ++i) {
+      const filter = filters[i]
+      if (filter.type === 'checkbox') {
+        template.push(html`<input type="checkbox" name="${filter.name}" value="${filter.value}" onChange=${(event) => onFilterChange(event, i)} checked=${filter.checked} /> ${filter.label}<br/>`)
+      }
+    }
+    return template
+  }
+}
+
 class App extends Preact.Component {
   constructor() {
     super()
     this.state = {
       loading: false,
-      apartments: []
+      apartments: [],
+      filters: [
+        {
+          type: 'checkbox',
+          name: 'layout',
+          value: '2x2',
+          label: '2x2',
+          checked: false
+        },
+        {
+          type: 'checkbox',
+          name: 'layout',
+          value: '3x3',
+          label: '3x3',
+          checked: false
+        }
+      ]
     }
   }
-  async componentDidMount() {
+  async fetchApartments(filters) {
     try {
       // set loading true
       this.setState({
         loading: true
       })
       // fetch apartments
-      const apartments = await apiRequest('/apartments')
+      const url = new window.URL('http://127.0.0.1:3000/apartments')
+      for (let i = 0; i < filters.length; ++i) {
+        const filter = filters[i]
+        if (filter.type === 'checkbox' && filter.checked) {
+          url.searchParams.append(filter.name, filter.value)
+        }
+      }
+      console.log(filters)
+      const apartments = await apiRequest(url)
       // set state
       this.setState({
         apartments
@@ -60,13 +100,28 @@ class App extends Preact.Component {
       })
     }
   }
+  async componentDidMount() {
+    await this.fetchApartments(this.state.filters)
+  }
+  onFilterChange = async (event, filterIndex) => {
+    const newFilters = JSON.parse(JSON.stringify(this.state.filters))
+    const filter = newFilters[filterIndex]
+    if (filter.type === 'checkbox'){
+      newFilters[filterIndex].checked = event.target.checked
+    }
+    this.setState({
+      filters: newFilters
+    })
+    await this.fetchApartments(newFilters)
+  }
   render() {
-    const { loading, apartments } = this.state
+    const { loading, apartments, filters } = this.state
     return html`
       <h1>Apartments</h1>
+      <${Filters} filters=${filters} onFilterChange=${this.onFilterChange} />
       <${ApartmentsList} loading=${loading} apartments=${apartments} />
     `
   }
 }
-// 6. append rendered App component to node document.body
+
 Preact.render(html`<${App}/>`, document.body)
