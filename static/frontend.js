@@ -13,10 +13,12 @@ const apiRequest = async (url) => {
   return response.json()
 }
 
-
 class ApartmentsList extends Preact.Component {
   constructor() {
     super()
+  }
+  formatAddress(address) {
+    return `${address.street1}, ${address.street2} ${address.city}, ${address.state}, ${address.zip}`
   }
   render() {
     const { loading, apartments } = this.props
@@ -30,6 +32,7 @@ class ApartmentsList extends Preact.Component {
             <th>Name</th>
             <th>Layout</th>
             <th>Price</th>
+            <th>Address</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +41,7 @@ class ApartmentsList extends Preact.Component {
               <td>${apartment.layout}</td>
               <td>${apartment.name}</td>
               <td>\$${apartment.price}</td>
+              <td>${this.formatAddress(apartment.address)}</td>
             </tr>
           `)}
         </tbody>
